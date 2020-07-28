@@ -222,9 +222,9 @@ class User extends REST_Controller {
       
     }
 
-    public function users_delete()
+    public function users_hapus_post()
     {
-        $id =  $this->delete('id');
+        $id =  $this->input->post('id');
         $hapus = $this->DataModel->delete('id_user', $id,'user');
         if($hapus){
             return $this->response(array(
