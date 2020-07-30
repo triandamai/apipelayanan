@@ -125,7 +125,7 @@ class User extends REST_Controller {
             "tempat_lahir"=> $jsonArray['tempat_lahir'],
             "tanggal_lahir"=> $jsonArray['tanggal_lahir'],
             "username" => $jsonArray['username'],
-            "password" => $jsonArray['nik'],
+            "password" => $jsonArray['password'],
             "nik" => $jsonArray['nik'],
             "level"=> $jsonArray['level'],
             "status_user"=> $jsonArray['status_user'],
