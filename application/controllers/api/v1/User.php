@@ -109,10 +109,14 @@ class User extends REST_Controller {
     {
         $username = $this->post('username');
         if(!empty($username)){
+            $check = $this->DataModel->getWhere('username',$username);
+            $check = $this->DataModel->getData('user')->num_rows();
+            if($check >0){
         $permitted_chars = '0123456789abcdefghijklmnopqrstuvwxyz';
         // Output: 54esmdr0qf
         $pass =  substr(str_shuffle($permitted_chars), 0, 10);
         $data = array('password'=> $pass );
+
         $simpan = $this->DataModel->update('username',$username,'user',$data);
         if($simpan){
             return $this->response(array(
@@ -129,6 +133,14 @@ class User extends REST_Controller {
                 "data"                  => "",
             ), REST_Controller::HTTP_OK);
         }
+    }else{
+        return $this->response(array(
+            "status"                => true,
+            "response_code"         => REST_Controller::HTTP_EXPECTATION_FAILED,
+            "response_message"      => "Username tidak boleh kosong! ",
+            "data"                  => "",
+        ), REST_Controller::HTTP_OK);
+    }
     }else{
         return $this->response(array(
             "status"                => true,
