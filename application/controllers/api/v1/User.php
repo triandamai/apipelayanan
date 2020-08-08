@@ -105,6 +105,39 @@ class User extends REST_Controller {
     
         }
     }
+    public function update_post()
+    {
+        $username = $this->post('username');
+        if(!empty($username)){
+        $permitted_chars = '0123456789abcdefghijklmnopqrstuvwxyz';
+        // Output: 54esmdr0qf
+        $pass =  substr(str_shuffle($permitted_chars), 0, 10);
+        $data = array('password'=> $pass );
+        $simpan = $this->DataModel->update('username',$username,'user',$data);
+        if($simpan){
+            return $this->response(array(
+                "status"                => true,
+                "response_code"         => REST_Controller::HTTP_OK,
+                "response_message"      => "Berhasil",
+                "data"                  => $pass,
+            ), REST_Controller::HTTP_OK);
+        }else{
+            return $this->response(array(
+                "status"                => true,
+                "response_code"         => REST_Controller::HTTP_EXPECTATION_FAILED,
+                "response_message"      => "Gagal : ". db_error(),
+                "data"                  => "",
+            ), REST_Controller::HTTP_OK);
+        }
+    }else{
+        return $this->response(array(
+            "status"                => true,
+            "response_code"         => REST_Controller::HTTP_EXPECTATION_FAILED,
+            "response_message"      => "Username tidak boleh kosong! ",
+            "data"                  => "",
+        ), REST_Controller::HTTP_OK);
+    }
+    }
 
     public function users_post()
     {
